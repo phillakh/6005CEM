@@ -1,0 +1,11 @@
+FROM python:3
+
+RUN pip install pyramid
+
+ADD Website /opt/Koala
+
+WORKDIR /opt/Koala
+RUN python setup.py install
+
+EXPOSE 6543
+CMD ["pserve", "production.ini"]

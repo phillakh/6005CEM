@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  pyramid:
+    build:
+      context: .
+      dockerfile: Website_Dockerfile
+    ports:
+      - "6543:6543"
+    expose:
+      - "6543"
