@@ -1,0 +1,29 @@
+{% extends "baselayout.jinja2" %}
+
+{% block content %}
+
+<div class="col text-center">
+
+<!-- And A Login Form -->
+    <form class="form loginform" method=POST>
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+
+    {% if message %}
+    <div class="alert alert-error">
+    {{ message }}
+    </div>
+    {% endif %}
+
+
+    <!-- <a href="signup">Create Account</a> -->
+
+</div>
+
+{% endblock content %}

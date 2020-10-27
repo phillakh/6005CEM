@@ -1,0 +1,44 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+<div class="col border">
+
+<h1>{{currentModule.code}}--{{currentModule.title}} Restore</h1>
+
+<h3>Warning</h3>
+<p>This will attempt to restore the file {{ restoreFile }}</p>
+<p><strong>You may lose data.</strong></p>
+
+{% if msg %}
+<div class="alert {{ msg.type }}">
+{{ msg.message }}
+</div>
+{% endif %}
+
+{% if result %}
+<h6>Result of Restore</h6>
+
+{{ result }}
+
+{% endif %}
+
+<!-- Otherwise give a preview -->
+{% if preview %}
+<h6>File Preview</h6>
+
+{{ preview[0:100] }}
+
+
+<form method="POST">
+    <input type="hidden" name="restoreName" value="{{ restoreName }}">
+    <button type="submit" class="btn btn-primary" name="confirmRestore" value="true">Confirm</button>
+<form>
+
+{% endif %}
+
+<form>
+
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+
+<div class="col-md-3 border ml-1">
+	<h2 class="mb-5">Materials</h2>
+    {% for heading in currentModule.navmenu %}
+        <h3> {{ heading.text }} </h3>
+        <ul>
+        {% for page in heading.articles %}
+            <li>
+            {% if page.id == thisArticle.id %}
+            <a href="{{request.route_url('materials', moduleId = currentModule.id, pageId=page.id)}}"><strong>{{ page.title }}</strong></a> 
+            {% else %} 
+            <a href="{{request.route_url('materials', moduleId = currentModule.id, pageId=page.id)}}"><em>{{ page.title }}<em></a> 
+            {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+
+    {# Add a header if role is teacher #}
+    {% if effectiveRole == "TEACHER" %}
+    <a class="btn btn-primary" href="{{request.route_url('newArticle', moduleId=currentModule.id)}}">New Item</a>
+    {% endif %}
+
+</div>
+<! -- Main Content -->
+<div class="col-md ml-1 mr-1">
+    {{ thisArticle.render() | safe }}
+</div>
+
+
+
+
+{% endblock content %}

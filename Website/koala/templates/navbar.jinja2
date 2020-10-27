@@ -1,0 +1,38 @@
+	<div class="dropdown">
+  		<button class="btn dropdown-toggle moduleselect btn-module" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    		{{ currentModule }}
+  		</button>
+  		<div class="dropdown-menu moduleselect" aria-labelledby="dropdownMenuButton">
+		  {% for module in modules %}
+		    {% if module != currentModule %}
+	    		<a class="dropdown-item" href="{{request.route_url(request.matched_route.name, moduleId=module.id, pageId=0)}}">{{module}}</a>
+			{% endif %}
+		  {% endfor %}
+  		</div>
+	</div>
+
+             <!-- --   NAV BAR -- -->
+			 
+	<div class="row">  
+	    <div class="col"> <!-- Dropdowns -->
+	      <ul class="nav">
+			<li class="nav-item">
+		  		<a class="nav-link active" href="{{ request.route_url('feed', moduleId=moduleId) }}">Feed</a>
+			</li>
+			<li class="nav-item">
+		  		<a class="nav-link" href="{{ request.route_url('materials', moduleId=moduleId, pageId=0) }}">Materials</a>
+			</li>
+	      </ul>
+	    </div>
+	
+		{% if request.user.isAdmin(moduleId) %}
+			<div class="float-right">
+				<a class="nav-link" href="{{request.route_url('moduleAdmin', moduleId=moduleId) }}">Module Admin</a>
+			</div>
+		{% endif %} 
+
+		
+
+		
+	</div>
+	

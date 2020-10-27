@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="{{request.locale_name}}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{request.static_url('koala:static/pyramid-16x16.png')}}">
+    
+
+    <title>Koala</title>
+    <!-- Bootstrap core CSS -->
+
+
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!-- Custom styles for this scaffold -->
+    <link href="{{request.static_url('koala:static/theme.css')}}" rel="stylesheet">
+    <link href="{{request.static_url('koala:static/highlight.css')}}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{request.static_url('koala:static/fontawesome/css/all.css')}}" rel="stylesheet">
+    
+  </head>
+
+  <body>
+    <!-- Main Page -->
+    <div class="container-lg ml-5 mr-5">
+      <!-- Avatar Bar -->
+      <div class="row">
+	      <div class="col-md-1 border">
+		      <div class="row">
+			      <div class="col-md-8 border  sidenav d-flex justify-content-center">
+	  		      {% include "avatarbar.jinja2" %}
+			      </div>
+		    </div>	
+	    </div>
+      <!-- End the Avatar -->
+	    <div class="col-md-11"> <!-- Content Col -->
+	      <!-- And We stick everything else inside to this so it aligns with the Avatar-->
+
+        <!-- Nav Bar Row -->
+	      <div class="row pt-5">  
+	        <div class="col"> <!-- The Mystifing Dropdown Menu -->
+			      {% include "navbar.jinja2" %}
+          </div> <!---- End of Menu -->
+	      </div>
+
+        <! -- Stash Alerts in their Own Row -->
+        <div class = "row">
+        {% for item in request.session.pop_flash() %}
+          <div class="alert alert-info"> 
+            {{item}}
+          </div>  
+          {% endfor %}
+        </div>
+
+
+        <!-- Main Content -->
+	      <div class="row contentbg"> <!-- Content Row -->
+          <!-- Message -->
+          {% block content %}
+          <p>No Content</p>
+          {% endblock content %}
+	      </div> <!-- Content Row-->
+
+	    </div> <!-- Content Col -->
+    </div> <!-- Main Row -->
+
+
+    <!--- Fancy Markdown Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
+    {% block customScripts %}
+    {% endblock customScripts %}
+  </body>
+</html>

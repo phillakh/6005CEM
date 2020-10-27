@@ -1,0 +1,17 @@
+{% if request.user %}
+  {% extends "layout.jinja2" %}
+{% else %}
+  {% extends "baselayout.jinja2" %}
+{% endif %}
+
+{% block content %}
+<div class="text-centre">
+  <h1>Welcome to <span class="font-semi-bold">Koala</span> </h1>
+  {% if not request.user %}
+  <h3><a href="{{request.route_url('login')}}"> Login</a><h3>
+  {% endif %}
+  <img class="rounded mx-auto d-block" src="{{request.static_url('koala:static/koala.jpg')}}"> 
+  
+  
+</div>
+{% endblock content %}

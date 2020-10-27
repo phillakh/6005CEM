@@ -1,0 +1,54 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+<div class="col border">
+<h1>{{currentModule.code}}--{{currentModule.title}} Admin</h1>
+
+<h3 class="mt-5">Backup</h3>
+<p>Make a backup of the module contents</p>
+<p>Backup file will default to "<moduleId>_<date>", unless an optional backup name is specified</p>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="backupName">(Optional): Backup Name</label>
+        <input type="text" class="form-control" id="backupName" name="backupName">
+    </div> 
+    <button type="submit" class="btn btn-primary" name="backup">Backup</button>
+</form>
+
+{% if msg %}
+<div class="alert {{msg.type}}">
+    {{msg.text}}
+</div>  
+{% endif %}
+
+<h3 class="mt-5"> Restore Module</h3>
+<p>Restore an Exsiting backup</p>
+<div class="alert alert-info">
+    <p>Currenly, only backups on the server can be restored</p>
+</div>
+
+<form action="{{request.route_url('moduleRestore', moduleId = currentModule.id)}}" method="POST">
+    <div class="form-group">
+        <label for="restoreName">Backup Name</label>
+        <select class="form-control" id="restoreName" name="restoreName">
+        {% for item in backupList %}
+            <option value={{item}}>{{item}}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary" name="restore">Backup</button>
+</form>
+
+
+<h3 class="mt-5">Get Students</h3>
+<p>Get a list of Students</p>
+<a class="btn btn-primary" href="{{request.route_url('studentList', moduleId = currentModule.id)}}">Get Students</a>
+
+
+
+
+
+</div>
+
+{% endblock content %}

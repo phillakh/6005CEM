@@ -1,0 +1,139 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+
+{# <div class="col border d-flex justify-content-center"> #}
+<div class="col border">
+    <div class="row">
+      <div class="card mt-5 mx-auto" style="width: 75%;">
+        <form class="form">
+          <div class="input-group input-group-lg">
+            <textarea rows="1" class="form-control" id="makecomment" placeholder="Post Something Here" data-toggle="modal" data-target="#dataEntry" data-postid="new"></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <!--- And our list of posts -->
+    {% for post in posts %}
+    <div class="row mt-5">
+      <div class="card mx-auto" style="width: 75%;">
+        <div class="card-header">
+	  <h4><strong>{{ post.theAuthor.name }}</strong></h4>
+	  <p>{{ post.getDate() }}</p>
+        </div>  
+        <div class="card-body">
+	  <h3 class="card-title text-center">{{ post.title }}</h3>
+          <p class="card-text">{{ post.renderMarkdown() | safe }}</p>
+        </div>
+
+	{% if post.replies %}
+	<a data-toggle="collapse" href="#collapseComment{{ post.id }}" role="button" aria-expanded="false" aria-controls="collapseComment{{ post.id }}">
+	  <p>View {{post.replies | length}} Replies</p>
+	</a>
+	<div class="collapse" id="collapseComment{{ post.id }}">
+	{% for reply in post.replies %}
+	<div class="card mx-auto" style="width: 95%;">
+	  <div class="card-header">
+	    <h6><strong>Reply from: {{ reply.theAuthor.name }}</strong></h6>
+	    <p>{{ reply.getDate() }}</p>
+	  </div>
+	  <div class="card-body">
+            <p class="card-text">{{ reply.renderMarkdown() | safe }}</p>
+          </div>
+	</div>
+	{% endfor %}
+	</div>	
+	{% endif %}
+	
+        <div class="card-footer">
+          <form class="form">
+            <div class="input-group input-group-lg">
+              <input type="text" class="form-control" id="makecomment" placeholder="Reply" data-toggle="modal" data-target="#dataEntry" data-postid="{{ post.id }}">
+              <button type="submit" class="btn">Comment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+   
+    {% endfor %}
+    <!-- And A "Post" -->    
+</div>
+
+
+<div class="modal" id="dataEntry" tabindex="-1" role="dialog" aria-labelledby="dataEntryLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dataEntryLabel">New Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method=POST>
+        <div class="form-group">
+            <input class="form-control" id="posttitle" name="posttitle" placeholder="Post Title" disabled=true>
+        </div>
+          <div class="form-group">
+            <textarea rows="10" class="form-control" id="modalComment" name="postContent" placeholder="Post Something Here"></textarea>
+          </div>
+
+      <input type="hidden" id="postparent" name="postparent" value=0>
+      <button type="submit" class="btn btn-primary">Post</button>
+	</form>
+	
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block customScripts  %}
+
+
+<script>
+$('#dataEntry').on('show.bs.modal', function (event) {
+  console.log("Button Pressed")
+  var textbox = $(event.relatedTarget) // Button that triggered the modal
+  var modal = $(this)
+
+
+  console.log(textbox)
+
+  var postId = textbox.data("postid")
+  
+  console.log("POST ID ", postId)
+  //postId = textbox.data("postid")
+  //Update this based on if we are a post or whatever
+  var title = "Reply to Post"
+  if (postId == "new"){
+    title = "New Post"
+    //Endble the Entry Box
+    document.getElementById("posttitle").disabled = false
+  }
+  else {
+    //Just In Case
+    document.getElementById("posttitle").disabled = true
+    document.getElementById("postparent").value = postId
+  }
+  
+  
+  
+  modal.find('.modal-title').text(title)
+
+  
+  //modal.find('.modal-body input').val(recipient)
+  
+})
+</script>
+
+<script>
+var simplemde = new SimpleMDE({ element: document.getElementById("modalComment") });
+</script>
+
+{% endblock customScripts %}
