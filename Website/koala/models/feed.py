@@ -26,9 +26,8 @@ class Post(Base):
     module = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("module.id"))
 
     parent = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('post.id'))
-    #Fuck Dates, let PK srt it out.
-    
-    #FK to whoever wrote it
+
+    #Foreign Key to whoever wrote it
     author = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("user.id")) 
 
     title = sqlalchemy.Column(sqlalchemy.Text)
