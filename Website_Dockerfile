@@ -7,5 +7,10 @@ ADD Website /opt/Koala
 WORKDIR /opt/Koala
 RUN python setup.py install
 
+RUN alembic -c development.ini revision --autogenerate -m "init"
+RUN alembic -c development.ini upgrade head
+RUN initialize_koala_db development.ini
+RUN create_koala_demo  development.ini
+
 EXPOSE 6543
 CMD ["pserve", "production.ini"]
